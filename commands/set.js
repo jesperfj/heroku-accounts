@@ -31,7 +31,7 @@ module.exports = {
       for(let i=0; i<netrclines.length; i++) {
         const l = netrclines[i];
         let newl = l
-        if(l=="machine api.heroku.com") {
+        if(l=="machine api.heroku.com" || l=="machine git.heroku.com") {
           inSection = true
         }
         if(l.match(/^  login/) && inSection) {
@@ -39,6 +39,9 @@ module.exports = {
         }
         if(l.match(/^  password/) && inSection) {
           newl = "  password "+accounts[login]
+        }
+        if(inSection && l.match(/^machine/) && l!="machine api.heroku.com" && l!="machine git.heroku.com") {
+          inSection = false
         }
         newnetrc.push(newl)
       }

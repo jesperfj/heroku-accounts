@@ -30,13 +30,11 @@ module.exports = {
         }
       }
       if(login && password) {
-        console.log(login+" "+password)
         const home = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
         let accounts = JSON.parse(fs.readFileSync(home+'/.heroku/accounts.json'))
         accounts[login] = password
-        console.log(Object.keys(accounts).join("\n"))
-        console.log(accounts[login])
         fs.writeFileSync(home+'/.heroku/accounts.json',JSON.stringify(accounts))
+        console.log("Saved "+login)
 
       } else {
         console.log("It doesn't look like you're logged in. Use `heroku login` to login first.")
